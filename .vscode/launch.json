@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch", // 配置名称，显示在左侧调试栏
+            "type": "cppdbg",
+            "request": "launch",
+            // 编译出的可执行文件路径，必须与 tasks.json 中的输出路径一致
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [], // 运行时需要传递给程序的命令行参数
+            "stopAtEntry": false, // 是否在 main 函数入口处自动暂停
+            "cwd": "${fileDirname}", // 当前工作目录
+            "environment": [],
+            "externalConsole": false, // 是否弹出外部终端窗口（Ubuntu 建议设为 false，直接用内置终端）
+            "MIMode": "gdb",
+            // Ubuntu 中 gdb 的默认路径
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            // 关键：调试前必须先编译。这里的值必须与 tasks.json 里的 label 完全一致
+            "preLaunchTask": "C/C++: g++ build active file"
+        }
+    ]
+}
