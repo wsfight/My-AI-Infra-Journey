@@ -10,44 +10,22 @@ class Solution
 public:
     int lengthOfLongestSubstring(string s)
     {
-        int cnt = 0;
-        int ans = 0;
-        unordered_set<char> uset;
+        // 不定长数组,越长越合理
+        int n = s.length();
+        unordered_map<char, int> umap;
         int left = 0;
-        int n = s.size();
-        for (int i = 0; i < n; ++i)
+        int ans = 0;
+        for (int right = 0; right < n; ++right)
         {
-            /**
-                1.判断是否在容器中.
-                1.1 是 goto 2
-                1.2 不在. 加入容器,右指针右移
-                2.移动左指针,每个左指针的元素在容器内-1.
-            */
-            if (!uset.count(s[i]))
+            char c = s[right];
+            ++umap[c];
+            while (umap[c] > 1)
             {
-                ++cnt;
-                ans = max(ans, cnt);
+                // 窗口内有重复元素
+                --umap[s[left++]];
             }
-            else
-            {
-
-                // 左指针移动
-                while (left < i)
-                {
-                    if (uset.count(s[i]))
-                    {
-                        // 如果还包含的话
-                        uset.erase(s[left++]);
-                        --cnt;
-                    }
-                    else
-                    {
-                        // 如果不包含了话
-                        break;
-                    }
-                }
-            }
-            uset.insert(s[i]);
+            // 直到窗口内没有重复元素
+            ans = max(ans, right - left + 1);
         }
         return ans;
     }
